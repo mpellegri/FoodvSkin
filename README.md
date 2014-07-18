@@ -23,7 +23,7 @@ This project will involve unsupervised as well as supervised learning, feature g
 
 *From email from Sudeep Das*
 
-### Project Deliverables
+### Project Deliverables###
 
 An interface where a user can upload a list of picture files and get a classification of those containing/not containing skin.
 
