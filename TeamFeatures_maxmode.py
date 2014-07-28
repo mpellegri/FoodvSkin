@@ -56,11 +56,8 @@ labels_df = pd.DataFrame(columns=['percent_skin_abg','percent_skin_cbcr','percen
 #get url
 file='People_MP.txt'
 urls=np.loadtxt(file,dtype="str")
-#for url in urls:
-for number in range(0, 2):
-
-    url=urls[number]
-
+for url in urls:
+    
     read= urllib2.urlopen(url).read()
     obj = Image.open( cStringIO.StringIO(read) )
     img= np.array(obj)
