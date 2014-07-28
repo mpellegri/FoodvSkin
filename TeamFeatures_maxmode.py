@@ -41,10 +41,25 @@ def get_features(labeled, prop_img, img, shapes, img_size):
                     max(hwratio), np.median(hwratio), max(density_hull), np.median(density_hull), max(circularity), np.median(circularity)]
     return features
 
+labels_df = pd.DataFrame(columns=['percent_skin_abg','percent_skin_cbcr','percent_skin_cccm',\
+                                      'percent_skin_equalized_abg','percent_skin_equalized_cbcr','percent_skin_equalized_cccm',\
+                                      'number_labels_abg', 'max_area_covered_abg', 'median_area_covered_abg','max_density_abg', 'median_density_abg',\
+                                      'max_hwratio_abg', 'median_hwratio_abg','max_density_hull_abg', 'median_density_hull_abg',\
+                                      'max_circularity_abg', 'median_circularity_abg',\
+                                      'number_labels_cbcr', 'max_area_covered_cbcr', 'median_area_covered_cbcr','max_density_cbcr', 'median_density_cbcr',\
+                                      'max_hwratio_cbcr', 'median_hwratio_cbcr','max_density_hull_cbcr', 'median_density_hull_cbcr',\
+                                      'max_circularity_cbcr', 'median_circularity_cbcr',\
+                                      'number_labels_cccm', 'max_area_covered_cccm', 'median_area_covered_cccm','max_density_cccm', 'median_density_cccm',\
+                                      'max_hwratio_cccm', 'median_hwratio_cccm','max_density_hull_cccm', 'median_density_hull_cccm',\
+                                      'max_circularity_cccm', 'median_circularity_cccm'])
+
 #get url
 file='People_MP.txt'
 urls=np.loadtxt(file,dtype="str")
-for url in urls:
+#for url in urls:
+for number in range(0, 2):
+
+    url=urls[number]
 
     read= urllib2.urlopen(url).read()
     obj = Image.open( cStringIO.StringIO(read) )
@@ -79,19 +94,6 @@ for url in urls:
 
     print "measure.regionprops done"
 
-    labels_df = pd.DataFrame(columns=['percent_skin_abg','percent_skin_cbcr','percent_skin_cccm',\
-                                      'percent_skin_equalized_abg','percent_skin_equalized_cbcr','percent_skin_equalized_cccm',\
-                                      'number_labels_abg', 'max_area_covered_abg', 'median_area_covered_abg','max_density_abg', 'median_density_abg',\
-                                      'max_hwratio_abg', 'median_hwratio_abg','max_density_hull_abg', 'median_density_hull_abg',\
-                                      'max_circularity_abg', 'median_circularity_abg',\
-                                      'number_labels_cbcr', 'max_area_covered_cbcr', 'median_area_covered_cbcr','max_density_cbcr', 'median_density_cbcr',\
-                                      'max_hwratio_cbcr', 'median_hwratio_cbcr','max_density_hull_cbcr', 'median_density_hull_cbcr',\
-                                      'max_circularity_cbcr', 'median_circularity_cbcr',\
-                                      'number_labels_cccm', 'max_area_covered_cccm', 'median_area_covered_cccm','max_density_cccm', 'median_density_cccm',\
-                                      'max_hwratio_cccm', 'median_hwratio_cccm','max_density_hull_cccm', 'median_density_hull_cccm',\
-                                      'max_circularity_cccm', 'median_circularity_cccm'])
-
-
     labels_df.loc[len(labels_df.index)]=([sm.percent_skin(image_abg), sm.percent_skin(image_cbcr), sm.percent_skin(image_cccm),\
                                       sm.percent_skin(image_EA_abg), sm.percent_skin(image_EA_cbcr), sm.percent_skin(image_EA_cccm),\
                                       features_abg[0], features_abg[1], features_abg[2], features_abg[3], features_abg[4], features_abg[5],\
@@ -101,6 +103,5 @@ for url in urls:
                                       features_cccm[0], features_cccm[1], features_cccm[2], features_cccm[3], features_cccm[4], features_cccm[5],\
                                       features_cccm[6], features_cccm[7], features_cccm[8], features_cccm[9], features_cccm[10]])
     #print "label features added to data frame"
-
 
 labels_df.to_csv("Features.csv")
