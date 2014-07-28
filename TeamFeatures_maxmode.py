@@ -54,10 +54,11 @@ labels_df = pd.DataFrame(columns=['percent_skin_abg','percent_skin_cbcr','percen
                                       'max_circularity_cccm', 'median_circularity_cccm'])
 
 #get url
-file='People_MP.txt'
+file='Food_MP.txt'
 urls=np.loadtxt(file,dtype="str")
 for url in urls:
-    
+
+    print url
     read= urllib2.urlopen(url).read()
     obj = Image.open( cStringIO.StringIO(read) )
     img= np.array(obj)
@@ -65,7 +66,6 @@ for url in urls:
     #plt.show()
     data= sm.SetUpImage(img)
     #print "image read in"
-    print url
 
     image_abg = data.ImgReg.skin.abg
     image_cbcr = data.ImgReg.skin.cbcr
@@ -101,4 +101,4 @@ for url in urls:
                                       features_cccm[6], features_cccm[7], features_cccm[8], features_cccm[9], features_cccm[10]])
     #print "label features added to data frame"
 
-labels_df.to_csv("Features.csv")
+labels_df.to_csv("Features_Food.csv")
